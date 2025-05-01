@@ -49,12 +49,12 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --main-bg-color: #032541;
+    --main-bg-color: #031d32;
     --text-color: #fff;
 
     --btn-bg-color: rgb(252, 211, 48);
-    --btn-text-color: rgb(255, 255, 255);
+    --btn-text-color: rgb(20, 20, 46);
 
-    --card-bg-color: #404142;
+    --card-bg-color: #454a62;
   }
 }
