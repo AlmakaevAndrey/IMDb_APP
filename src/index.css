@@ -1,6 +1,7 @@
 :root {
   --main-bg-color: #032541;
   --text-color: #fff;
+  --text-loader-color: #fff;
 
   --btn-bg-color: rgb(245, 197, 24);
   --btn-text-color: rgb(150, 31, 31);
@@ -39,6 +40,7 @@ body {
   :root {
     --main-bg-color: #fff;
     --text-color: #032541;
+    --text-loader-color: #ff6200;
 
     --btn-bg-color: rgb(255, 246, 246);
     --btn-text-color: rgb(20, 20, 46);
@@ -51,6 +53,7 @@ body {
   :root {
     --main-bg-color: #031d32;
     --text-color: #fff;
+    --text-loader-color: #fff;
 
     --btn-bg-color: rgb(252, 211, 48);
     --btn-text-color: rgb(20, 20, 46);
