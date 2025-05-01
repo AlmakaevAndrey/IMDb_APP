@@ -5,6 +5,7 @@ import cls from "./HomePage.module.css";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
+import { SearchInput } from "../../components/SearchInput/SearchInput";
 
 export const HomePage = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -36,8 +37,10 @@ export const HomePage = () => {
 
   return (
     <div className={cls.homeWrapper}>
-      <input type="text" value={searchValue} onChange={onSearchChangeHandler} />
       <h1>Popular Movies</h1>
+      <div className={cls.controlsContainer}>
+        <SearchInput value={searchValue} onChange={onSearchChangeHandler} />
+      </div>
       {isLoading && <Loader />}
       {error && <div>{error}</div>}
       <MovieCardList movies={movies || []} />
