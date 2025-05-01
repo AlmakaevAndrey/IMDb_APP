@@ -1,11 +1,11 @@
 import { API_REQUEST, API_KEY } from "../../API_KEY";
-import { MovieCard } from "../../components/MovieCard/MovieCard";
+import { MovieCardList } from "../../components/MovieCardList";
 import cls from "./HomePage.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
 export const HomePage = () => {
-  const [movies, setMovies] = useState([]);
+  const [movie, setMovies] = useState([]);
 
   const getMovieCards = async () => {
     try {
@@ -31,9 +31,7 @@ export const HomePage = () => {
     <div className={cls.homeWrapper}>
       <h1>Popular Movies</h1>
       <div className={cls.moviesGrid}>
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} title={movie.title} poster={movie.poster_path} />
-        ))}
+        <MovieCardList movies={movie} />
       </div>
     </div>
   );
