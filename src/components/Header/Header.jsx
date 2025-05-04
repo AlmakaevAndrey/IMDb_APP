@@ -11,7 +11,7 @@ export const Header = () => {
         <span className={cls.spanIMDb}>IMDb APP</span>
       </p>
       <ul className={cls.nameWrapper}>
-        <li onClick={() => navigate("/movie")} className={cls.name}>
+        <li onClick={() => navigate("/")} className={cls.name}>
           movie
         </li>
         <li onClick={() => navigate("/favorites")} className={cls.name}>

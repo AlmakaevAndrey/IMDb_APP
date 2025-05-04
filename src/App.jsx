@@ -8,7 +8,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
+          {/* <Route path="/" element={<HomePage />} /> */}
+          <Route path="/:movieType?" element={<HomePage />} />
+          <Route index element={<HomePage />} />
           <Route path="/forbidden" element={<div>forbidden !!!</div>} />
           <Route path="/favorites" element={<div>favorites movies</div>} />
           <Route path="/search" element={<div>search movie</div>} />

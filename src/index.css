@@ -6,6 +6,9 @@
   --btn-bg-color: rgb(245, 197, 24);
   --btn-text-color: rgb(150, 31, 31);
 
+  --btn-chose-movies-bg-color: rgb(245, 197, 24);
+  --btn-chose-movies-text-color: rgb(150, 31, 31);
+
   --card-bg-color: #ead42d;
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -47,6 +50,8 @@ body {
 
     --btn-bg-color: rgb(255, 246, 246);
     --btn-text-color: rgb(20, 20, 46);
+    --btn-chose-movies-bg-color: rgb(252, 211, 48);
+    --btn-chose-movies-text-color: rgb(20, 20, 46);
 
     --card-bg-color: #ead42d;
   }
@@ -60,6 +65,8 @@ body {
 
     --btn-bg-color: rgb(252, 211, 48);
     --btn-text-color: rgb(20, 20, 46);
+    --btn-chose-movies-bg-color: rgb(252, 211, 48);
+    --btn-chose-movies-text-color: rgb(20, 20, 46);
 
     --card-bg-color: #454a62;
   }
