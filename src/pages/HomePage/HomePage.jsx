@@ -6,8 +6,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
+import { Pagination } from "../../components/Pagination/Pagination";
 
 const MOVIE_TYPES = {
   popular: "Popular Movies",
@@ -18,32 +19,42 @@ const MOVIE_TYPES = {
 export const HomePage = () => {
   const [searchValue, setSearchValue] = useState("");
   const { movieType } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const currentPage = Number(searchParams.get("page")) || 1;
   const currentMovieType = movieType || "popular";
+  console.log("currentMovieType:", currentMovieType);
 
   const {
     data: moviesData,
     fetchFn,
     isLoading,
     error,
-  } = useFetch(async (type) => {
-    const response = await axios.get(`https://api.themoviedb.org/3/movie/${type}`, {
-      params: {
-        api_key: API_KEY,
-        language: "en-US",
-        page: 1,
+  } = useFetch(async (type, page) => {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieType}?page=${currentPage}&api_key=${API_KEY}&language=en-US`,
+      {
+        params: {
+          api_key: API_KEY,
+          language: "en-US",
+          page: page,
+        },
       },
-    });
+    );
     return response.data;
   });
 
   useEffect(() => {
-    fetchFn(currentMovieType);
-  }, [currentMovieType]);
+    fetchFn(currentMovieType, currentPage);
+  }, [currentMovieType, currentPage]);
 
   const handleCategoryChange = (newType) => {
-    navigate(`/${newType}`);
+    navigate(`/${newType}?page=1`);
+  };
+
+  const handlePageChange = (newPage) => {
+    setSearchParams({ page: newPage });
   };
 
   const filterMovie =
@@ -54,37 +65,26 @@ export const HomePage = () => {
       <h1>{MOVIE_TYPES[currentMovieType]}</h1>
       <div className={cls.controlsContainer}>
         <SearchInput value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
-      </div>
 
-      <div className={cls.navButtons}>
-        <Button
-          onClick={() => handleCategoryChange("popular")}
-          className={currentMovieType === "popular"}
-          isActive={currentMovieType === "popular"}
-        >
-          Popular
-        </Button>
-        <Button
-          onClick={() => handleCategoryChange("top_rated")}
-          className={currentMovieType === "top_rated"}
-          isActive={currentMovieType === "top_rated"}
-        >
-          Top Rated
-        </Button>
-        <Button
-          onClick={() => handleCategoryChange("upcoming")}
-          className={currentMovieType === "upcoming"}
-          isActive={currentMovieType === "upcoming"}
-        >
-          Upcoming
-        </Button>
+        <div className={cls.navButtons}>
+          <Button onClick={() => handleCategoryChange("popular")} isActive={currentMovieType === "popular"}>
+            Popular
+          </Button>
+          <Button onClick={() => handleCategoryChange("top_rated")} isActive={currentMovieType === "top_rated"}>
+            Top Rated
+          </Button>
+          <Button onClick={() => handleCategoryChange("upcoming")} isActive={currentMovieType === "upcoming"}>
+            Upcoming
+          </Button>
+        </div>
       </div>
 
       {isLoading && <Loader />}
-
       {error && <div className={cls.error}>{error}</div>}
 
       <MovieCardList movies={filterMovie} />
+
+      <Pagination totalPages={moviesData?.total_pages || 1} currentPage={currentPage} onPageHandlerChange={handlePageChange} />
     </div>
   );
 };
