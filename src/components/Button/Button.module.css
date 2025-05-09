@@ -5,10 +5,10 @@
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--btn-bg-color);
-  color: var(--btn-text-color);
+  background-color: var(--btn-chose-movies-bg-color);
+  color: var(--btn-chose-movies-text-color);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
@@ -27,5 +27,5 @@
 
 .active {
   color: #000;
-  background-color: rgb(127, 208, 255);
+  background-color: rgb(44, 167, 239);
 }

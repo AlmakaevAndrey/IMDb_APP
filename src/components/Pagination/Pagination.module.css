@@ -8,18 +8,4 @@
 
 .pagination button {
   width: 45px;
-  background-color: var(--btn-chose-movies-bg-color);
-  color: var(--btn-chose-movies-text-color);
-}
-
-.pageButton {
-  width: 425px;
-  background-color: var(--btn-chose-movies-bg-color);
-  color: var(--btn-chose-movies-text-color);
-}
-
-.active {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
 }

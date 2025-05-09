@@ -48,9 +48,7 @@ body {
     --text-color: #032541;
     --text-loader-color: #ff6200;
 
-    --btn-bg-color: rgb(255, 246, 246);
-    --btn-text-color: rgb(20, 20, 46);
-    --btn-chose-movies-bg-color: rgb(252, 211, 48);
+    --btn-chose-movies-bg-color: rgb(203, 245, 204);
     --btn-chose-movies-text-color: rgb(20, 20, 46);
 
     --card-bg-color: #ead42d;
@@ -63,8 +61,6 @@ body {
     --text-color: #fff;
     --text-loader-color: #fff;
 
-    --btn-bg-color: rgb(252, 211, 48);
-    --btn-text-color: rgb(20, 20, 46);
     --btn-chose-movies-bg-color: rgb(252, 211, 48);
     --btn-chose-movies-text-color: rgb(20, 20, 46);
 
