@@ -31,7 +31,10 @@
 .cardNameMovie {
   color: var(--text-color);
   text-align: center;
-  display: flex;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   justify-content: center;
   align-items: center;
   width: 100%;

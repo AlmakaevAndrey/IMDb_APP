@@ -9,6 +9,7 @@ import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
 import { Pagination } from "../../components/Pagination/Pagination";
+import { delayFn } from "../../helpers/delayFn";
 
 const MOVIE_TYPES = {
   popular: "Popular Movies",
@@ -43,8 +44,11 @@ export const HomePage = () => {
         },
       },
     );
+
     return response.data;
   });
+
+  delayFn();
 
   useEffect(() => {
     fetchFn(currentMovieType, currentPage);
