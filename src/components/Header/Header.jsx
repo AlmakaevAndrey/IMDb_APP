@@ -1,5 +1,5 @@
 import cls from "./Header.module.css";
-import IMDbLogo from "../../assets/imdb.svg";
+import TMDbLogo from "../../assets/TMDB.svg";
 import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
@@ -7,11 +7,11 @@ export const Header = () => {
   return (
     <header className={cls.header}>
       <p onClick={() => navigate("/")}>
-        <img src={IMDbLogo} alt="imdb logo" className={cls.IMDbLogo} />
-        <span className={cls.spanIMDb}>IMDb APP</span>
+        <img src={TMDbLogo} alt="tmdb logo" className={cls.IMDbLogo} />
+        <span className={cls.spanIMDb}>TMDB APP</span>
       </p>
       <ul className={cls.nameWrapper}>
-        <li onClick={() => navigate("/")} className={cls.name}>
+        <li onClick={() => navigate("/movie")} className={cls.name}>
           movie
         </li>
         <li onClick={() => navigate("/favorites")} className={cls.name}>

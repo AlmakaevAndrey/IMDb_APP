@@ -3,7 +3,7 @@ import { Loader } from "../../components/Loader";
 import { MovieCardList } from "../../components/MovieCardList";
 import cls from "./HomePage.module.css";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -22,9 +22,10 @@ export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const controlsContainerRef = useRef();
+
   const currentPage = Number(searchParams.get("page")) || 1;
   const currentMovieType = movieType || "popular";
-  console.log("currentMovieType:", currentMovieType);
 
   const {
     data: moviesData,
@@ -47,6 +48,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     fetchFn(currentMovieType, currentPage);
+    controlsContainerRef.current.scrollIntoView({ behavior: "smooth" });
   }, [currentMovieType, currentPage]);
 
   const handleCategoryChange = (newType) => {
@@ -63,7 +65,7 @@ export const HomePage = () => {
   return (
     <div className={cls.homeWrapper}>
       <h1>{MOVIE_TYPES[currentMovieType]}</h1>
-      <div className={cls.controlsContainer}>
+      <div className={cls.controlsContainer} ref={controlsContainerRef}>
         <SearchInput value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
 
         <div className={cls.navButtons}>

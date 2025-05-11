@@ -1,7 +1,7 @@
 import cls from "./MovieCard.module.css";
 import { Button } from "../Button/Button";
 
-export const MovieCard = ({ title, rating, poster }) => {
+export const MovieCard = ({ title, poster }) => {
   const posterUrl = poster ? `https://image.tmdb.org/t/p/w500${poster}` : "https://via.placeholder.com/500x750?text=No+Poster";
 
   return (

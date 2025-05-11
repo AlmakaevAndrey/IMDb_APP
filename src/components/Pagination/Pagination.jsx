@@ -6,7 +6,6 @@ export const Pagination = ({ totalPages, currentPage, onPageHandlerChange }) => 
   const maxPages = Math.min(totalPages, 20);
 
   if (totalPages < 2) return null;
-  console.log("Current page:", currentPage);
 
   return (
     <div className={cls.pagination}>

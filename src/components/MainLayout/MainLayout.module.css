@@ -25,13 +25,13 @@
 .footer {
   width: 100%;
   padding: 15px 10px;
-  background-color: transparent;
+  background-color: var(--text-footer-color);
   text-align: center;
   font-size: 15px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  color: var(--text-color);
+  color: rgb(0, 0, 0);
   opacity: 0.8;
 }

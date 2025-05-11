@@ -4,6 +4,7 @@ export const MovieIcon = () => {
       id="Layer_1"
       width={20}
       height={20}
+      fill="white"
       enableBackground="new 0 0 100.4 100.4"
       viewBox="0 0 100.4 100.4"
       xmlns="http://www.w3.org/2000/svg"

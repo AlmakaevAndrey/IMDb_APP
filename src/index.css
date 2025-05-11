@@ -1,15 +1,15 @@
 :root {
-  --main-bg-color: #032541;
+  --main-bg-color: rgb(13, 37, 63);
   --text-color: #fff;
-  --text-loader-color: #fff;
+  --text-header-color: rgb(13, 37, 63);
 
   --btn-bg-color: rgb(245, 197, 24);
-  --btn-text-color: rgb(150, 31, 31);
+  --btn-text-color: rgb(1, 180, 228);
 
   --btn-chose-movies-bg-color: rgb(245, 197, 24);
-  --btn-chose-movies-text-color: rgb(150, 31, 31);
+  --btn-chose-movies-text-color: rgb(13, 37, 63);
 
-  --card-bg-color: #ead42d;
+  --card-bg-color: rgb(1, 180, 228);
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -45,24 +45,26 @@ body {
 @media (prefers-color-scheme: light) {
   :root {
     --main-bg-color: #fff;
-    --text-color: #032541;
-    --text-loader-color: #ff6200;
+    --text-color: rgb(1, 180, 228);
+    --text-footer-color: rgb(1, 180, 228);
+    --text-header-color: rgb(13, 37, 63);
 
-    --btn-chose-movies-bg-color: rgb(203, 245, 204);
-    --btn-chose-movies-text-color: rgb(20, 20, 46);
+    --btn-chose-movies-bg-color: rgb(144, 206, 161);
+    --btn-chose-movies-text-color: rgb(13, 37, 63);
 
-    --card-bg-color: #ead42d;
+    --card-bg-color: rgb(13, 37, 63);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --main-bg-color: #031d32;
-    --text-color: #fff;
-    --text-loader-color: #fff;
+    --text-color: rgb(1, 180, 228);
+    --text-footer-color: rgb(1, 180, 228);
+    --text-header-color: rgb(13, 37, 63);
 
-    --btn-chose-movies-bg-color: rgb(252, 211, 48);
-    --btn-chose-movies-text-color: rgb(20, 20, 46);
+    --btn-chose-movies-bg-color: rgb(144, 206, 161);
+    --btn-chose-movies-text-color: rgb(13, 37, 63);
 
     --card-bg-color: #454a62;
   }
