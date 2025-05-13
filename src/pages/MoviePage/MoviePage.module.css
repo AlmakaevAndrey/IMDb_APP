@@ -1,0 +1,213 @@
+.container {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 0 20px;
+}
+
+.moviePosterAndTrailer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.moviePoster {
+  width: 100%;
+  max-width: 300px;
+  height: 400px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+
+.movieTrailer {
+  width: 100%;
+  height: 400px;
+  max-width: 650px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  background-color: var(--card-bg-color);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 970px;
+}
+
+.formTitle {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.formWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  gap: 16px;
+  text-align: center;
+}
+
+.releaseAndLanguageWrapper,
+.movieVoteAndGenresWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.movieReleaseDate,
+.movieOriginalLanguage,
+.movieVoteAverage,
+.movieGenreIds {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.movieDownWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.movieOverview {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-color);
+  text-align: justify;
+  width: 100%;
+  padding: 0 10px;
+}
+
+@media (max-width: 1050px) {
+  .moviePoster {
+    max-width: 250px;
+    height: 350px;
+  }
+
+  .movieTrailer {
+    height: 350px;
+    max-width: 550px;
+  }
+
+  .formContainer {
+    max-width: 820px;
+  }
+}
+
+@media (max-width: 900px) {
+  .moviePoster {
+    height: 300px;
+    max-width: 200px;
+  }
+
+  .movieTrailer {
+    height: 300px;
+    max-width: 450px;
+  }
+
+  .formContainer {
+    max-width: 670px;
+  }
+
+  .formTitle {
+    font-size: 24px;
+  }
+
+  .movieReleaseDate,
+  .movieOriginalLanguage,
+  .movieVoteAverage,
+  .movieGenreIds {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .movieOverview {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 750px) {
+  .moviePoster {
+    height: 250px;
+    max-width: 150px;
+  }
+
+  .movieTrailer {
+    height: 250px;
+    max-width: 350px;
+  }
+
+  .formContainer {
+    max-width: 520px;
+  }
+
+  .formTitle {
+    font-size: 18px;
+  }
+
+  .movieReleaseDate,
+  .movieOriginalLanguage,
+  .movieVoteAverage,
+  .movieGenreIds {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .movieOverview {
+    font-size: 12px;
+  }
+
+  .movieButton {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .moviePoster {
+    height: 200px;
+    max-width: 120px;
+  }
+
+  .movieTrailer {
+    height: 200px;
+    max-width: 250px;
+  }
+
+  .formContainer {
+    max-width: 390px;
+  }
+}
+
+@media (max-width: 600px) {
+  .moviePoster {
+    height: 420px;
+    max-width: 300px;
+  }
+
+  .movieTrailer {
+    height: 200px;
+    max-width: 300px;
+  }
+
+  .formContainer {
+    max-width: 300px;
+  }
+}
