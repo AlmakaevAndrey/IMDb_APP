@@ -6,7 +6,7 @@ export const Header = () => {
   const navigate = useNavigate();
   return (
     <header className={cls.header}>
-      <p onClick={() => navigate("/")}>
+      <p onClick={() => navigate("/movie")}>
         <img src={TMDbLogo} alt="tmdb logo" className={cls.IMDbLogo} />
         <span className={cls.spanIMDb}>TMDB APP</span>
       </p>

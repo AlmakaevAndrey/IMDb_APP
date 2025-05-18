@@ -1,96 +1,92 @@
-import { API_KEY } from "../../API_KEY";
-import { Loader } from "../../components/Loader";
-import { MovieCardList } from "../../components/MovieCardList";
 import cls from "./HomePage.module.css";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-import { useFetch } from "../../hooks/useFetch";
-import { SearchInput } from "../../components/SearchInput/SearchInput";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Button } from "../../components/Button/Button";
 import { Pagination } from "../../components/Pagination/Pagination";
+import { Loader } from "../../components/Loader";
+import { Filters } from "../../components/Filters/Filters";
+import { MovieCardList } from "../../components/MovieCardList";
+import { SearchInput } from "../../components/SearchInput/SearchInput";
+import { API_KEY } from "../../API_KEY";
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { buildFiltersParams } from "../../utils/buildFiltersParams";
 import { delayFn } from "../../helpers/delayFn";
 
-const MOVIE_TYPES = {
-  popular: "Popular Movies",
-  top_rated: "Top Rated Movies",
-  upcoming: "Upcoming Movies",
-};
-
 export const HomePage = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const { movieType } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const currentPage = Number(searchParams.get("page")) || 1;
 
+  const [filters, setFilters] = useState({});
+  const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [moviesData, setMoviesData] = useState(null);
+
+  const debounceRef = useRef(null);
   const controlsContainerRef = useRef();
 
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const currentMovieType = movieType || "popular";
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      const fetchMovies = async () => {
+        setIsLoading(true);
+        await delayFn(1000);
+        setError(null);
 
-  const {
-    data: moviesData,
-    fetchFn,
-    isLoading,
-    error,
-  } = useFetch(async (type, page) => {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieType}?page=${currentPage}&api_key=${API_KEY}&language=en-US`,
-      {
-        params: {
+        const baseURL = searchValue.trim()
+          ? "https://api.themoviedb.org/3/search/movie"
+          : "https://api.themoviedb.org/3/discover/movie";
+
+        const params = {
           api_key: API_KEY,
           language: "en-US",
-          page: page,
-        },
-      },
-    );
+          page: currentPage,
+        };
 
-    return response.data;
-  });
+        if (searchValue.trim()) {
+          params.query = searchValue.trim();
+        } else {
+          Object.assign(params, buildFiltersParams(filters));
+        }
 
-  delayFn();
+        try {
+          const response = await axios.get(baseURL, { params });
+          setMoviesData(response.data);
+        } catch (err) {
+          setError("");
+        } finally {
+          setIsLoading(false);
+        }
+      };
 
-  useEffect(() => {
-    fetchFn(currentMovieType, currentPage);
-    controlsContainerRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [currentMovieType, currentPage]);
+      fetchMovies();
+    }, 400);
 
-  const handleCategoryChange = (newType) => {
-    navigate(`/${newType}?page=1`);
-  };
+    return () => clearTimeout(debounceRef.current);
+  }, [searchValue, filters, currentPage]);
 
   const handlePageChange = (newPage) => {
     setSearchParams({ page: newPage });
   };
 
-  const filterMovie =
-    moviesData?.results?.filter((movie) => movie.title.toLowerCase().includes(searchValue.trim().toLowerCase())) || [];
-
   return (
     <div className={cls.homeWrapper}>
-      <h1>{MOVIE_TYPES[currentMovieType]}</h1>
+      <h1>Movies on TMDB</h1>
       <div className={cls.controlsContainer} ref={controlsContainerRef}>
-        <SearchInput value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
-
-        <div className={cls.navButtons}>
-          <Button onClick={() => handleCategoryChange("popular")} isActive={currentMovieType === "popular"}>
-            Popular
-          </Button>
-          <Button onClick={() => handleCategoryChange("top_rated")} isActive={currentMovieType === "top_rated"}>
-            Top Rated
-          </Button>
-          <Button onClick={() => handleCategoryChange("upcoming")} isActive={currentMovieType === "upcoming"}>
-            Upcoming
-          </Button>
+        <div className={cls.searchMovieWrapper}>
+          <SearchInput value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+          <Filters onFilterChange={setFilters} className={cls.MovieFilters} />
         </div>
       </div>
 
       {isLoading && <Loader />}
       {error && <div className={cls.error}>{error}</div>}
 
-      <MovieCardList movies={filterMovie} />
-
-      <Pagination totalPages={moviesData?.total_pages || 1} currentPage={currentPage} onPageHandlerChange={handlePageChange} />
+      <MovieCardList movies={moviesData?.results || []} />
+      <Pagination
+        totalPages={Math.min(moviesData?.total_pages || 1, 10)}
+        currentPage={currentPage}
+        onPageHandlerChange={handlePageChange}
+      />
     </div>
   );
 };

@@ -10,13 +10,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Navigate to="/popular?page=1" replace />} />
-          <Route path="/movie" element={<Navigate to="/popular?page=1" replace />} />
+          <Route path="/" element={<Navigate to="/?page=1" replace />} />
           <Route path="/movie/:id" element={<MoviePage />} />
           <Route path="/:movieType?" element={<HomePage />} />
-          <Route path="/forbidden" element={<div>forbidden !!!</div>} />
           <Route path="/favorites" element={<FavoritesMovie />} />
-          <Route path="/search" element={<div>search movie</div>} />
+          <Route path="/search" element={<HomePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

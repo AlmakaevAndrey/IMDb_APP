@@ -55,8 +55,6 @@ export const MoviePage = () => {
     }
   }, [isLoading, error, navigate]);
 
-  if (isLoading) return <Loader />;
-
   if (!movie) return null;
 
   const posterUrl = movie.poster_path

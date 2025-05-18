@@ -1,0 +1,17 @@
+.filtersWrapper {
+  display: flex;
+  gap: 10px;
+  border-radius: 20px;
+}
+
+.filtersWrapper select {
+  height: 40px;
+  width: 96px;
+  background-color: var(--card-bg-color);
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  border: none;
+  font-size: 14px;
+  text-align: center;
+  text-wrap: wrap;
+}

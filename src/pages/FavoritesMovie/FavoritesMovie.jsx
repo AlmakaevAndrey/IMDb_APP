@@ -6,7 +6,7 @@ import { delayFn } from "../../helpers/delayFn";
 import { Loader } from "../../components/Loader";
 
 export const FavoritesMovie = () => {
-  const [favorites, setFavorites] = useState([]);
+  const [favoritesMovie, setFavorites] = useState([]);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -15,8 +15,8 @@ export const FavoritesMovie = () => {
       try {
         setIsLoading(true);
         await delayFn(1000);
-        const stored = JSON.parse(localStorage.getItem("favorites") || "[]");
-        setFavorites(stored);
+        const storedMovies = JSON.parse(localStorage.getItem("favorites") || "[]");
+        setFavorites(storedMovies);
         setError(false);
       } catch (error) {
         console.error("Failed fetch:", error);
@@ -29,9 +29,9 @@ export const FavoritesMovie = () => {
   }, []);
 
   const handleRemove = (id) => {
-    const updated = favorites.filter((movie) => movie.id !== id);
-    setFavorites(updated);
-    localStorage.setItem("favorites", JSON.stringify(updated));
+    const updatedMovie = favoritesMovie.filter((movie) => movie.id !== id);
+    setFavorites(updatedMovie);
+    localStorage.setItem("favorites", JSON.stringify(updatedMovie));
   };
 
   const renderCardWithRemove = (movie) => (
@@ -50,10 +50,10 @@ export const FavoritesMovie = () => {
         <Loader />
       ) : error ? (
         <p>Failed to load favorites.</p>
-      ) : favorites.length === 0 ? (
+      ) : favoritesMovie.length === 0 ? (
         <p className={cls.empty}>Don`t have any favorites movie</p>
       ) : (
-        <div className={cls.cardList}>{favorites.map(renderCardWithRemove)}</div>
+        <div className={cls.cardList}>{favoritesMovie.map(renderCardWithRemove)}</div>
       )}
     </div>
   );
