@@ -1,6 +1,7 @@
 import cls from "./Header.module.css";
 import TMDbLogo from "../../assets/TMDB.svg";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggler } from "../../features/ThemeToggler/ThemeToggler";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export const Header = () => {
         <li onClick={() => navigate("/search")} className={cls.name}>
           search
         </li>
+        <ThemeToggler />
       </ul>
     </header>
   );

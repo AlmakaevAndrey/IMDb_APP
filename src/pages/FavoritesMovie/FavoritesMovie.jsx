@@ -58,3 +58,5 @@ export const FavoritesMovie = () => {
     </div>
   );
 };
+
+export default FavoritesMovie;

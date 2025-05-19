@@ -11,7 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import { buildFiltersParams } from "../../utils/buildFiltersParams";
 import { delayFn } from "../../helpers/delayFn";
 
-export const HomePage = () => {
+const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
@@ -90,3 +90,5 @@ export const HomePage = () => {
     </div>
   );
 };
+
+export default HomePage;

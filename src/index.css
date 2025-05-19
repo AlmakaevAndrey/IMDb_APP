@@ -44,6 +44,19 @@ body {
   background-color: var(--main-bg-color);
 }
 
+.darkLayout {
+  --main-bg-color: #031d32;
+  --text-color: rgb(1, 180, 228);
+  --text-footer-color: rgb(1, 180, 228);
+  --text-header-color: rgb(13, 37, 63);
+
+  --btn-chose-movies-bg-color: rgb(144, 206, 161);
+  --btn-chose-movies-text-color: rgb(13, 37, 63);
+  --text-loader-color: rgb(245, 197, 24);
+
+  --card-bg-color: #454a62;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     --main-bg-color: #fff;

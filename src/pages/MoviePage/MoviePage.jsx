@@ -55,6 +55,10 @@ export const MoviePage = () => {
     }
   }, [isLoading, error, navigate]);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   if (!movie) return null;
 
   const posterUrl = movie.poster_path
@@ -104,3 +108,5 @@ export const MoviePage = () => {
     </div>
   );
 };
+
+export default MoviePage;
