@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import cls from "./Filters.module.css";
 import axios from "axios";
 import { API_KEY } from "../../API_KEY";
-import { Loader } from "../Loader";
 
-export const Filters = ({ onFilterChange }) => {
+const FiltersComponent = ({ onFilterChange }) => {
   const [allGenres, setAllGenres] = useState([]);
   const [currantYear, setCurrantYear] = useState("");
   const [currantGenre, setCurrantGenre] = useState("");
@@ -60,3 +59,5 @@ export const Filters = ({ onFilterChange }) => {
     </div>
   );
 };
+
+export const Filters = React.memo(FiltersComponent);

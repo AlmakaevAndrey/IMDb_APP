@@ -19,7 +19,7 @@ export const MoviePage = () => {
     const fetchMovie = async () => {
       try {
         setIsLoading(true);
-        await delayFn(500);
+        await delayFn(1000);
         const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
         setMovie(res.data);
         setError(false);
@@ -80,7 +80,7 @@ export const MoviePage = () => {
   return (
     <div className={cls.container}>
       <div className={cls.moviePosterAndTrailer}>
-        <img src={posterUrl} alt={movie?.title} className={cls.moviePoster} />
+        <img loading="lazy" src={posterUrl} alt={movie?.title} className={cls.moviePoster} />
         {trailerKey && (
           <iframe
             className={cls.movieTrailer}

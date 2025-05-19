@@ -2,8 +2,9 @@ import cls from "./MainLayout.module.css";
 import { GitHubLogo } from "../GitHubLogo/GitHubLogo";
 import { Outlet } from "react-router-dom";
 import { Header } from "../Header";
+import { memo } from "react";
 
-export const MainLayout = () => {
+export const MainLayout = memo(() => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -19,4 +20,4 @@ export const MainLayout = () => {
       </div>
     </div>
   );
-};
+});

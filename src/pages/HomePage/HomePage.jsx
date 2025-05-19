@@ -1,12 +1,12 @@
 import cls from "./HomePage.module.css";
 import axios from "axios";
-import { Pagination } from "../../components/Pagination/Pagination";
+import Pagination from "../../components/Pagination/Pagination";
 import { Loader } from "../../components/Loader";
 import { Filters } from "../../components/Filters/Filters";
 import { MovieCardList } from "../../components/MovieCardList";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { API_KEY } from "../../API_KEY";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { buildFiltersParams } from "../../utils/buildFiltersParams";
 import { delayFn } from "../../helpers/delayFn";
@@ -29,8 +29,8 @@ const HomePage = () => {
     debounceRef.current = setTimeout(() => {
       const fetchMovies = async () => {
         setIsLoading(true);
-        await delayFn(1000);
         setError(null);
+        await delayFn(1000);
 
         const baseURL = searchValue.trim()
           ? "https://api.themoviedb.org/3/search/movie"
@@ -64,9 +64,14 @@ const HomePage = () => {
     return () => clearTimeout(debounceRef.current);
   }, [searchValue, filters, currentPage]);
 
-  const handlePageChange = (newPage) => {
-    setSearchParams({ page: newPage });
-  };
+  const handlePageChange = useCallback(
+    (newPage) => {
+      setSearchParams({ page: newPage });
+    },
+    [setSearchParams],
+  );
+
+  const totalPages = useMemo(() => Math.min(moviesData?.total_pages || 1, 10), [moviesData]);
 
   return (
     <div className={cls.homeWrapper}>
@@ -82,11 +87,7 @@ const HomePage = () => {
       {error && <div className={cls.error}>{error}</div>}
 
       <MovieCardList movies={moviesData?.results || []} />
-      <Pagination
-        totalPages={Math.min(moviesData?.total_pages || 1, 10)}
-        currentPage={currentPage}
-        onPageHandlerChange={handlePageChange}
-      />
+      <Pagination totalPages={totalPages} currentPage={currentPage} onPageHandlerChange={handlePageChange} />
     </div>
   );
 };

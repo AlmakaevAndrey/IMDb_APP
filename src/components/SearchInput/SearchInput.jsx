@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { memo, useId } from "react";
 import cls from "./SearchInput.module.css";
 import { MovieIcon } from "../MovieIcon/icon";
 
@@ -13,3 +13,5 @@ export const SearchInput = ({ value, onChange }) => {
     </div>
   );
 };
+
+export default memo(SearchInput);

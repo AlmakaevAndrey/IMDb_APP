@@ -2,7 +2,7 @@ import React from "react";
 import cls from "./Pagination.module.css";
 import { Button } from "../Button/Button";
 
-export const Pagination = ({ totalPages, currentPage, onPageHandlerChange }) => {
+const Pagination = ({ totalPages, currentPage, onPageHandlerChange }) => {
   const maxPages = Math.min(totalPages, 20);
 
   if (totalPages < 2) return null;
@@ -17,3 +17,5 @@ export const Pagination = ({ totalPages, currentPage, onPageHandlerChange }) => 
     </div>
   );
 };
+
+export default React.memo(Pagination);

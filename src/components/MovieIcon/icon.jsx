@@ -1,4 +1,6 @@
-export const MovieIcon = () => {
+import { memo } from "react";
+
+export const MovieIcon = memo(() => {
   return (
     <svg
       id="Layer_1"
@@ -17,4 +19,4 @@ export const MovieIcon = () => {
       </g>
     </svg>
   );
-};
+});

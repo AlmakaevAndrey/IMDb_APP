@@ -1,18 +1,21 @@
 import cls from "./MovieCard.module.css";
 import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
+import React from "react";
 
-export const MovieCard = ({ id, title, poster }) => {
+export const MovieCard = React.memo(({ id, title, poster }) => {
   const navigate = useNavigate();
   const posterUrl = poster ? `https://image.tmdb.org/t/p/w500${poster}` : "https://via.placeholder.com/500x750?text=No+Poster";
 
-  const handleViewClick = () => {
+  const handleViewClick = useCallback(() => {
     navigate(`/movie/${id}`);
-  };
+  }, [navigate, id]);
+
   return (
     <div className={cls.card}>
       <div className={cls.cardWrapper}>
-        <img className={cls.posterMovies} src={posterUrl} alt={title} />
+        <img loading="lazy" className={cls.posterMovies} src={posterUrl} alt={title} />
         <div className={cls.cardContext}>
           <p className={cls.cardNameMovie}>{title}</p>
           <Button className={cls.cardBtn} onClick={handleViewClick}>
@@ -22,4 +25,4 @@ export const MovieCard = ({ id, title, poster }) => {
       </div>
     </div>
   );
-};
+});
