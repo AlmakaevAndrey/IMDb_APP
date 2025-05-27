@@ -20,6 +20,7 @@ export default [
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
+      base: "IMDb_APP",
       prettier,
     },
     extends: ["js/recommended"],

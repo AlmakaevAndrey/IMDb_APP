@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { MainLayout } from "./components/MainLayout";
 import { HomePageLazy } from "./pages/HomePage";
@@ -6,7 +7,7 @@ import { MoviePageLazy } from "./pages/MoviePage";
 import { FavoritesMovieLazy } from "./pages/FavoritesMovie";
 import { ThemeProvider } from "./theme/ThemeProvider";
 
-function App() {
+const App: React.FC = () => {
   return (
     <ThemeProvider>
       <BrowserRouter>
