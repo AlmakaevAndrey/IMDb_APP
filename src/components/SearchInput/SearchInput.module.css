@@ -11,9 +11,8 @@
 .movieIcon {
   position: absolute;
   margin: 15px 15px;
-  top: 10px;
   left: 10px;
-  margin-left: 100px;
+  margin-left: 1px;
   fill: var(--text-color);
 }
 

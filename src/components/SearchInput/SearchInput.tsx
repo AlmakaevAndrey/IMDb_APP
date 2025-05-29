@@ -1,8 +1,13 @@
-import { memo, useId } from "react";
+import { ChangeEventHandler, memo, useId } from "react";
 import cls from "./SearchInput.module.css";
 import { MovieIcon } from "../MovieIcon/icon";
 
-export const SearchInput = ({ value, onChange }) => {
+type SearchInputProps = {
+  value: string;
+  onChange?: ChangeEventHandler | undefined;
+}
+
+export const SearchInput = ({ value, onChange }: SearchInputProps) => {
   const inputID = useId();
 
   return (

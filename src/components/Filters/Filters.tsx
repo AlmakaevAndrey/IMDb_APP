@@ -2,12 +2,23 @@ import React, { useEffect, useState } from "react";
 import cls from "./Filters.module.css";
 import axios from "axios";
 import { API_KEY } from "../../API_KEY";
+import { FiltersProps } from "../../utils/buildFiltersParams";
 
-const FiltersComponent = ({ onFilterChange }) => {
-  const [allGenres, setAllGenres] = useState([]);
-  const [currantYear, setCurrantYear] = useState("");
-  const [currantGenre, setCurrantGenre] = useState("");
-  const [currantRating, setCurrantRating] = useState("");
+type GenresMovie = {
+  id: number;
+  name: string;
+}
+
+type FiltersComponentsProps = {
+  onFilterChange: (filters: FiltersProps) => void;
+  className?: string;
+}
+
+const FiltersComponent: React.FC<FiltersComponentsProps> = ({ onFilterChange }) => {
+  const [allGenres, setAllGenres] = useState<GenresMovie[]>([]);
+  const [currantYear, setCurrantYear] = useState<string>("");
+  const [currantGenre, setCurrantGenre] = useState<string>("");
+  const [currantRating, setCurrantRating] = useState<string>("");
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -22,7 +33,11 @@ const FiltersComponent = ({ onFilterChange }) => {
   }, []);
 
   useEffect(() => {
-    onFilterChange({ genre: currantGenre, year: currantYear, rating: currantRating });
+    onFilterChange({
+      genre: currantGenre,
+      year: currantYear ? Number(currantYear) : undefined,
+      rating: currantRating ? Number(currantRating) : undefined,
+    });
   }, [currantGenre, currantYear, currantRating, onFilterChange]);
 
   return (

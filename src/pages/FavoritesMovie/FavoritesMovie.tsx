@@ -5,8 +5,15 @@ import { MovieCard } from "../../components/MovieCard";
 import { delayFn } from "../../helpers/delayFn";
 import { Loader } from "../../components/Loader";
 
+interface MoviePropsType {
+  id: number;
+  title?: string;
+  original_title?: string;
+  poster_path?: string;
+}
+
 const FavoritesMovie = () => {
-  const [favoritesMovie, setFavorites] = useState([]);
+  const [favoritesMovie, setFavorites] = useState<MoviePropsType[]>([]);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +36,7 @@ const FavoritesMovie = () => {
     fetchMovieFavorites();
   }, []);
 
-  const handleRemove = useCallback((id) => {
+  const handleRemove = useCallback((id: number) => {
     setFavorites((prev) => {
       const updated = prev.filter((movie) => movie.id !== id);
       localStorage.setItem("favorites", JSON.stringify(updated));
@@ -38,9 +45,9 @@ const FavoritesMovie = () => {
   }, []);
 
   const renderCardWithRemove = useCallback(
-    (movie) => (
+    (movie: MoviePropsType) => (
       <div className={cls.cardWrapper} key={movie.id}>
-        <MovieCard id={movie.id} title={movie.title || movie.original_title} poster={movie.poster_path} />
+        <MovieCard id={movie.id} title={movie.title || movie.original_title || ""} poster={movie.poster_path} />
         <Button className={cls.removeBtn} onClick={() => handleRemove(movie.id)}>
           Delete
         </Button>

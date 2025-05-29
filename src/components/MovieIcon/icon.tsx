@@ -1,8 +1,13 @@
-import { memo } from "react";
+import React, { memo } from "react";
 
-export const MovieIcon = memo(() => {
+type MovieIconProps = {
+  className?: string;
+}
+
+export const MovieIcon: React.FC<MovieIconProps> = memo(({className}) => {
   return (
     <svg
+      className = {className}
       id="Layer_1"
       width={20}
       height={20}

@@ -5,7 +5,7 @@ import { Header } from "../Header";
 import { memo } from "react";
 
 export const MainLayout = memo(() => {
-  const currentYear = new Date().getFullYear();
+  const currentYear: number = new Date().getFullYear();
 
   return (
     <div className={cls.mainLayout}>

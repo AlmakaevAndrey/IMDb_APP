@@ -1,11 +1,22 @@
-import { createContext, useLayoutEffect, useState } from "react";
+import { createContext, ReactNode, useLayoutEffect, useState } from "react";
 import { THEME_STORAGE } from "../constants";
 
-export const ThemeContext = createContext(null);
+type Theme = "light" | "dark";
 
-export const ThemeProvider = ({ children }) => {
-  const savedTheme = localStorage.getItem(THEME_STORAGE) || "light";
-  const [theme, setTheme] = useState(savedTheme);
+type ThemeContextType = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+}
+
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+type Props = {
+  children: ReactNode;
+}
+
+export const ThemeProvider = ({ children }: Props) => {
+  const savedTheme = (localStorage.getItem(THEME_STORAGE) as Theme) || "light";
+  const [theme, setTheme] = useState<Theme>(savedTheme);
 
   useLayoutEffect(() => {
     if (theme === "dark") {
@@ -24,7 +35,7 @@ export const ThemeProvider = ({ children }) => {
       setTheme(isDark ? "dark" : "light");
     }
 
-    const handleChange = (e) => {
+    const handleChange = (e: MediaQueryListEvent) => {
       if (!localStorage.getItem(THEME_STORAGE)) {
         setTheme(e.matches ? "dark" : "light");
       }

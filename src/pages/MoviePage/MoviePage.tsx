@@ -7,13 +7,29 @@ import { delayFn } from "../../helpers/delayFn";
 import { Loader } from "../../components/Loader";
 import { Button } from "../../components/Button";
 
+interface Genre {
+  id: number;
+  name: string;
+}
+
+interface MovieProps {
+  id: number;
+  title: string;
+  original_title: string;
+  poster_path?: string;
+  release_date: string;
+  vote_average?: number;
+  genres?: Genre[];
+  overview: string;
+}
+
 export const MoviePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState<MovieProps | null>(null);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [trailerKey, setTrailerKey] = useState(null);
+  const [trailerKey, setTrailerKey] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -36,8 +52,8 @@ export const MoviePage = () => {
   useEffect(() => {
     const fetchTrailer = async () => {
       try {
-        const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`);
-        const trailers = res.data.results;
+        const res = await axios.get<{ results: Array<{key: string; type: string; site: string}> }>(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`);
+        const trailers = res.data.results || [];
         const youtubeTrailer = trailers.find((video) => video.type === "Trailer" && video.site === "YouTube");
         if (youtubeTrailer) {
           setTrailerKey(youtubeTrailer.key);
@@ -61,13 +77,13 @@ export const MoviePage = () => {
 
   if (!movie) return null;
 
-  const posterUrl = movie.poster_path
+  const posterUrl: string = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : "https://via.placeholder.com/500x750?text=No+Poster";
 
   const handleToAddMovie = () => {
     const stored = JSON.parse(localStorage.getItem("favorites") || "[]");
-    const exists = stored.some((item) => item.id === movie.id);
+    const exists = stored.some((item: { id: number; }) => item.id === movie.id);
 
     if (exists) {
       alert("This movie has already been added!");

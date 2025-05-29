@@ -1,7 +1,11 @@
 import { memo } from "react";
 import cls from "./GitHubLogo.module.css";
 
-export const GitHubLogo = memo(({ className }) => {
+type Logo = {
+  className?: string;
+}
+
+export const GitHubLogo: React.FC<Logo> = memo(({ className }) => {
   return (
     <a href="https://github.com/AlmakaevAndrey" target="_blank" rel="noopener noreferrer">
       <svg className={`${cls.icon} ${className}`} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">

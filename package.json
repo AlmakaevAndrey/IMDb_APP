@@ -11,7 +11,10 @@
     "preview": "vite preview",
     "server": "json-server -p 3001",
     "server:help": "json-server --help",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "type-check": "tsc --noEmit",
+    "start-type-check": "npm run type-check && your-start-command",
+    "build-type-check": "npm run type-check && your-build-command"
   },
   "dependencies": {
     "axios": "^1.9.0",

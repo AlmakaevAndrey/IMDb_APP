@@ -6,27 +6,39 @@ import { Filters } from "../../components/Filters/Filters";
 import { MovieCardList } from "../../components/MovieCardList";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { API_KEY } from "../../API_KEY";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { buildFiltersParams } from "../../utils/buildFiltersParams";
+import { buildFiltersParams, FiltersProps } from "../../utils/buildFiltersParams";
 import { delayFn } from "../../helpers/delayFn";
+
+
+interface Movie {
+  id: number;
+  title: string;
+}
+
+interface MoviesData {
+  results: Movie[];
+  total_pages: number;
+}
+
 
 const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState<FiltersProps>({});
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [moviesData, setMoviesData] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [moviesData, setMoviesData] = useState<MoviesData | null>(null);
 
-  const debounceRef = useRef(null);
-  const controlsContainerRef = useRef();
+  const debounceRef = useRef<number | null>(null);
+  const controlsContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
+    debounceRef.current = window.setTimeout(() => {
       const fetchMovies = async () => {
         setIsLoading(true);
         setError(null);
@@ -36,7 +48,7 @@ const HomePage = () => {
           ? "https://api.themoviedb.org/3/search/movie"
           : "https://api.themoviedb.org/3/discover/movie";
 
-        const params = {
+        const params: Record<string, any> = {
           api_key: API_KEY,
           language: "en-US",
           page: currentPage,
@@ -52,7 +64,7 @@ const HomePage = () => {
           const response = await axios.get(baseURL, { params });
           setMoviesData(response.data);
         } catch (err) {
-          setError("");
+          setError(err instanceof Error ? err.message : "Error");
         } finally {
           setIsLoading(false);
         }
@@ -61,12 +73,13 @@ const HomePage = () => {
       fetchMovies();
     }, 400);
 
-    return () => clearTimeout(debounceRef.current);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);}
   }, [searchValue, filters, currentPage]);
 
   const handlePageChange = useCallback(
-    (newPage) => {
-      setSearchParams({ page: newPage });
+    (newPage: number) => {
+      setSearchParams({ page: newPage.toString() });
     },
     [setSearchParams],
   );
@@ -78,7 +91,7 @@ const HomePage = () => {
       <h1>Movies on TMDB</h1>
       <div className={cls.controlsContainer} ref={controlsContainerRef}>
         <div className={cls.searchMovieWrapper}>
-          <SearchInput value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+          <SearchInput value={searchValue} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)} />
           <Filters onFilterChange={setFilters} className={cls.MovieFilters} />
         </div>
       </div>

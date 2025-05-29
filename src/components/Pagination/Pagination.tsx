@@ -2,7 +2,13 @@ import React from "react";
 import cls from "./Pagination.module.css";
 import { Button } from "../Button/Button";
 
-const Pagination = ({ totalPages, currentPage, onPageHandlerChange }) => {
+type PaginationPropsType = {
+  totalPages: number;
+  currentPage: number;
+  onPageHandlerChange: (page: number) => void;
+}
+
+const Pagination = ({ totalPages, currentPage, onPageHandlerChange }: PaginationPropsType) => {
   const maxPages = Math.min(totalPages, 20);
 
   if (totalPages < 2) return null;

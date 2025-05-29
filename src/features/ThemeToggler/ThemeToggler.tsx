@@ -1,11 +1,17 @@
+import React from "react";
 import { THEME_STORAGE } from "../../constants";
 import { useTheme } from "../../hooks/useTheme";
 import cls from "./ThemeToggler.module.css";
 
-export const ThemeToggler = () => {
-  const { theme, setTheme } = useTheme();
+type ThemeContextType = {
+  theme: "light" | "dark";
+  setTheme: (theme: "light" | "dark") => void;
+}
 
-  const onChangeHandler = (e) => {
+export const ThemeToggler: React.FC = () => {
+  const { theme, setTheme } = useTheme() as unknown as ThemeContextType;
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked === true;
     const updatedTheme = isChecked ? "dark" : "light";
 

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { MainLayout } from "./components/MainLayout/MainLayout.jsx";
-import { HomePage } from "./pages/HomePage";
-import { NotFoundPage } from "./pages/NotFoundPage/NotFoundPage.jsx";
+import { MainLayout } from "../components/MainLayout/MainLayout";
+import { HomePage } from "../pages/HomePage";
+import { NotFoundPage } from "../pages/NotFoundPage/NotFoundPage";
 
 function App() {
   return (
