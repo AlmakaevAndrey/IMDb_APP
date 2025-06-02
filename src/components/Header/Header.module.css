@@ -37,7 +37,7 @@
 }
 
 .nameWrapper {
-  width: 250px;
+  width: 450px;
   gap: 5px;
   display: flex;
   justify-content: space-around;
@@ -48,24 +48,34 @@
     cursor: pointer;
     font-size: 18px;
     font-weight: 700;
+    margin: 3px;
   }
   .name:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
+  }
+
+  .Button {
+    margin: 5px;
   }
 }
 
 @media (max-width: 700px) {
   .nameWrapper {
-    width: 200px;
+    width: 300px;
 
     .name {
-      cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 
   .spanIMDb {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
+  }
+}
+
+@media (max-width: 440px) {
+  .spanIMDb {
+    display: none;
   }
 }
