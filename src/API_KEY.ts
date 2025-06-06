@@ -11,4 +11,3 @@ export const API_REQUEST: APIRequestType = {
 };
 
 export const API_KEY = apiKey || "none";
-console.log("VITE_API_KEY from import.meta.env: ", apiKey);

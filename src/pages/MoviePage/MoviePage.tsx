@@ -1,11 +1,11 @@
-import axios from "axios";
 import cls from "./MoviePage.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_KEY } from "../../API_KEY";
 import { delayFn } from "../../helpers/delayFn";
 import { Loader } from "../../components/Loader";
 import { Button } from "../../components/Button";
+import { MovieService } from "../../Axios/MovieService";
+import { useFetch } from "../../helpers/useFetch";
 
 interface Genre {
   id: number;
@@ -27,37 +27,24 @@ export const MoviePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<MovieProps | null>(null);
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        setIsLoading(true);
-        await delayFn(1000);
-        const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
-        setMovie(res.data);
-        setError(false);
-      } catch (error) {
-        console.error("Failed fetch:", error);
-        setError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovie();
-  }, [id]);
+    const [fetchMoviesById, isLoading, error] = useFetch< string, MovieProps>(
+      async (movieId) => await MovieService.getMovieById(movieId)
+    );
+
+      useEffect(() => {
+        if (!id) return;
+        fetchMoviesById(id).then((data) => {
+          if (data) setMovie(data);
+        })
+      }, [id]);
 
   useEffect(() => {
     const fetchTrailer = async () => {
       try {
-        const res = await axios.get<{ results: Array<{key: string; type: string; site: string}> }>(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}&language=en-US`);
-        const trailers = res.data.results || [];
-        const youtubeTrailer = trailers.find((video) => video.type === "Trailer" && video.site === "YouTube");
-        if (youtubeTrailer) {
-          setTrailerKey(youtubeTrailer.key);
-        }
+          const trailerKey = await MovieService.getMovieTrailer(id!);
+          setTrailerKey(trailerKey);
       } catch (error) {
         console.error("Failed to fetch trailer", error);
       }

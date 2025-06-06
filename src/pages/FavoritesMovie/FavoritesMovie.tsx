@@ -4,6 +4,7 @@ import cls from "./FavoritesMovie.module.css";
 import { MovieCard } from "../../components/MovieCard";
 import { delayFn } from "../../helpers/delayFn";
 import { Loader } from "../../components/Loader";
+import { useFetch } from "../../helpers/useFetch";
 
 interface MoviePropsType {
   id: number;
@@ -14,27 +15,19 @@ interface MoviePropsType {
 
 const FavoritesMovie = () => {
   const [favoritesMovie, setFavorites] = useState<MoviePropsType[]>([]);
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [fetchMovieFavorites, isLoading, error] = useFetch<null, MoviePropsType[]>(
+    async () => {
+      await delayFn(1000);
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    }
+  )
 
   useEffect(() => {
-    const fetchMovieFavorites = async () => {
-      try {
-        setIsLoading(true);
-        await delayFn(1000);
-        const storedMovies = JSON.parse(localStorage.getItem("favorites") || "[]");
-        setFavorites(storedMovies);
-        setError(false);
-      } catch (error) {
-        console.error("Failed to fetch favorites:", error);
-        setError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMovieFavorites();
-  }, []);
+    fetchMovieFavorites(null).then((data) => {
+      if (data) setFavorites(data);
+    })
+  }, [])
 
   const handleRemove = useCallback((id: number) => {
     setFavorites((prev) => {
