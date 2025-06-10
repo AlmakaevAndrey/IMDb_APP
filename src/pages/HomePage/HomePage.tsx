@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import { FiltersProps } from "../../utils/buildFiltersParams";
 import { MovieService } from "../../Axios/MovieService";
 import { useFetch } from "../../helpers/useFetch";
+import { toast } from "react-toastify";
 
 
 interface Movie {
@@ -21,6 +22,7 @@ interface MoviesData {
   total_pages: number;
 }
 
+const TOAST_ID = "no-movies-toast";
 
 const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -41,11 +43,19 @@ const HomePage = () => {
   useEffect(() => {
     const debounce = setTimeout(() => {
       fetchMovies({query: searchValue, filters, page: currentPage}).then((data) => {
-        if (data) setMoviesData(data);
+        if (data) 
+          setMoviesData(data);
       });
     }, 400);
     return () => clearTimeout(debounce);
   }, [searchValue, filters, currentPage]);
+
+useEffect(() => {
+  if (moviesData && searchValue.trim() !== "" && moviesData.results.length === 0 && !toast.isActive(TOAST_ID)) {
+    toast.info("No movies found", { toastId: TOAST_ID });
+  }
+}, [moviesData, searchValue]);
+
 
   const handlePageChange = useCallback(
     (newPage: number) => {

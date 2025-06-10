@@ -1,6 +1,7 @@
 import { error } from 'console';
 import { useState } from "react"
 import { delayFn } from './delayFn';
+import { toast } from 'react-toastify';
 
 export const  useFetch = <T = any, R = any> (callback: (arg: T) => Promise<R>) : [(arg: T) => Promise<R | undefined>, boolean, string] => {
     
@@ -19,6 +20,7 @@ export const  useFetch = <T = any, R = any> (callback: (arg: T) => Promise<R>) :
         } catch (err) {
             const message = err instanceof Error ? err.message : "Not worked!"
             setError(message)
+            toast.error( message);
         } finally {
             setIsLoading(false);
         }

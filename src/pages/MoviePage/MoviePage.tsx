@@ -6,6 +6,8 @@ import { Loader } from "../../components/Loader";
 import { Button } from "../../components/Button";
 import { MovieService } from "../../Axios/MovieService";
 import { useFetch } from "../../helpers/useFetch";
+import { toast } from "react-toastify";
+import { isAxiosError } from "axios";
 
 interface Genre {
   id: number;
@@ -22,6 +24,8 @@ interface MovieProps {
   genres?: Genre[];
   overview: string;
 }
+
+const TOAST_ID = "failed-to-fetch-trailer";
 
 export const MoviePage = () => {
   const { id } = useParams();
@@ -47,9 +51,14 @@ export const MoviePage = () => {
           setTrailerKey(trailerKey);
       } catch (error) {
         console.error("Failed to fetch trailer", error);
+
+        if (!trailerKey && !toast.isActive(TOAST_ID)) {
+          const message = isAxiosError(error) && error.response ? error.response.data?.message || "Failed to fetch trailer" : "Failed to fetch trailer";
+          toast.error(message, {toastId: TOAST_ID});
+        }
       }
     };
-    fetchTrailer();
+    if (id) fetchTrailer();
   }, [id]);
 
   useEffect(() => {
@@ -73,10 +82,10 @@ export const MoviePage = () => {
     const exists = stored.some((item: { id: number; }) => item.id === movie.id);
 
     if (exists) {
-      alert("This movie has already been added!");
+      toast.info("This movie was added!");
     } else {
       localStorage.setItem("favorites", JSON.stringify([...stored, movie]));
-      alert("Film was added!");
+      toast.info("Movie was added at the favorites!");
     }
   };
 

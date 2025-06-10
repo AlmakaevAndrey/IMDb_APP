@@ -3,11 +3,13 @@ import { GitHubLogo } from "../GitHubLogo/GitHubLogo";
 import { Outlet } from "react-router-dom";
 import { Header } from "../Header";
 import { memo } from "react";
+import { ToastContainer } from "react-toastify";
 
 export const MainLayout = memo(() => {
   const currentYear: number = new Date().getFullYear();
 
   return (
+    <>
     <div className={cls.mainLayout}>
       <Header />
       <div className={cls.mainWrapper}>
@@ -19,5 +21,8 @@ export const MainLayout = memo(() => {
         </footer>
       </div>
     </div>
+
+    <ToastContainer/>
+    </>
   );
 });

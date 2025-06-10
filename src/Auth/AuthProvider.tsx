@@ -19,6 +19,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         setIsAuth(storedAuth === "true");
         setLoading(false);
     }, [])
+
     
     return <AuthContext.Provider value={{isAuth, loading, setIsAuth}}>{children}</AuthContext.Provider>
 }

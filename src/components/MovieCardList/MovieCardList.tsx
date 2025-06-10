@@ -14,6 +14,7 @@ type MovieProps = {
 
 export const MovieCardList = memo(({ movies }: MovieProps) => {
   if (!movies || movies.length === 0) {
+    console.log("Received movies:", movies);
 
     return <div>No movies found</div>;
     

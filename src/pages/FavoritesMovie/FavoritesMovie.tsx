@@ -5,6 +5,7 @@ import { MovieCard } from "../../components/MovieCard";
 import { delayFn } from "../../helpers/delayFn";
 import { Loader } from "../../components/Loader";
 import { useFetch } from "../../helpers/useFetch";
+import { toast } from "react-toastify";
 
 interface MoviePropsType {
   id: number;
@@ -12,6 +13,9 @@ interface MoviePropsType {
   original_title?: string;
   poster_path?: string;
 }
+
+const TOAST_ID = "you-don`t-have-any-favorites-movie";
+const ERROR_TOAST_ID = "failed-to-load-favorites";
 
 const FavoritesMovie = () => {
   const [favoritesMovie, setFavorites] = useState<MoviePropsType[]>([]);
@@ -26,6 +30,10 @@ const FavoritesMovie = () => {
   useEffect(() => {
     fetchMovieFavorites(null).then((data) => {
       if (data) setFavorites(data);
+
+      if (!data?.length && !toast.isActive(TOAST_ID)) {
+        toast.info("You don't have any favorite movies", { toastId: TOAST_ID})
+      }
     })
   }, [])
 
@@ -49,9 +57,11 @@ const FavoritesMovie = () => {
     [handleRemove],
   );
 
+
   const content = useMemo(() => {
     if (isLoading) return <Loader />;
     if (error) return <p>Failed to load favorites.</p>;
+    if (error && toast.isActive(ERROR_TOAST_ID)) !toast.error("Failed to load favorites", {toastId: ERROR_TOAST_ID});
     if (favoritesMovie.length === 0) return <p className={cls.empty}>Don't have any favorite movies</p>;
 
     return <div className={cls.cardList}>{favoritesMovie.map(renderCardWithRemove)}</div>;
