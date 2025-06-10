@@ -1,0 +1,1 @@
+import{r as n,y as u}from"./index-CUOtPIL2.js";const f=async(e=1e3)=>await new Promise(s=>setTimeout(s,e)),d=e=>{const[s,r]=n.useState(!1),[c,a]=n.useState("");return[async i=>{try{return r(!0),a(""),await f(2e3),await e(i)}catch(t){const o=t instanceof Error?t.message:"Not worked!";a(o),u.error(o)}finally{r(!1)}},s,c]};export{f as d,d as u};
