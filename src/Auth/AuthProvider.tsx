@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect } from 'react';
+import { createContext, ReactNode, useEffect } from 'react';
 import { AUTH_STORAGE } from '../constants';
 import { useState } from 'react';
 

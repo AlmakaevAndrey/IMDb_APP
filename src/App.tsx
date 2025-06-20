@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, {  useLayoutEffect, useRef } from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { MainLayout } from "./components/MainLayout";
 import { HomePageLazy } from "./pages/HomePage";
@@ -20,18 +20,18 @@ const ProtectedRoutes = () => {
   const TOAST_LOG_IN_ID = "toast-logged-in-id";
   const prevAuthRef = useRef<boolean | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!loading) {
       if (prevAuthRef.current === null) {
         prevAuthRef.current = isAuth;
         return;
       }
-
+      
       if (isAuth && !toast.isActive(TOAST_LOG_IN_ID)) {
         toast.success("You are logged in!", { toastId: TOAST_LOG_IN_ID });
-      }
+      } 
       
-      if (prevAuthRef.current !== isAuth) {
+      if (prevAuthRef.current == !isAuth) {
         if (!isAuth && !toast.isActive(TOAST_LOG_OUT_ID)) {
           toast.error("You are logged out!", { toastId: TOAST_LOG_OUT_ID });
         }
@@ -52,7 +52,7 @@ const App: React.FC = () => {
     <>
     <ThemeProvider>
       <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<MoviePageLazy/>} />
