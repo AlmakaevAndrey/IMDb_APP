@@ -11,7 +11,6 @@ import { MovieService } from "../../Axios/MovieService";
 import { useFetch } from "../../helpers/useFetch";
 import { toast } from "react-toastify";
 
-
 interface Movie {
   id: number;
   title: string;
@@ -29,33 +28,41 @@ const HomePage = () => {
   const currentPage = Number(searchParams.get("page")) || 1;
 
   const [filters, setFilters] = useState<FiltersProps>({});
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [moviesData, setMoviesData] = useState<MoviesData | null>(null);
 
-  const [fetchMovies, isLoading, error] = useFetch<{query: string; filters: FiltersProps; page: number},
-  MoviesData
-  >(async ({query, filters, page}) => {
-    return await MovieService.getSearchMovie(query, filters, page);
-  })
+  const [fetchMovies, isLoading, error] = useFetch<{ query: string; filters: FiltersProps; page: number }, MoviesData>(
+    async ({ query, filters, page }) => {
+      return await MovieService.getSearchMovie(query, filters, page);
+    },
+  );
 
   const controlsContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      fetchMovies({query: searchValue, filters, page: currentPage}).then((data) => {
-        if (data) 
-          setMoviesData(data);
-      });
+      const fetchData = async () => {
+        try {
+          const data = await fetchMovies({ query: searchValue, filters, page: currentPage });
+          if (data) setMoviesData(data);
+        } catch (error) {
+          if (error instanceof Error) {
+            toast.error(`Error: ${error.message}`);
+          } else {
+            toast.error("Unknown error fetching movies");
+          }
+        }
+      };
+      fetchData();
     }, 400);
     return () => clearTimeout(debounce);
   }, [searchValue, filters, currentPage]);
 
-useEffect(() => {
-  if (moviesData && searchValue.trim() !== "" && moviesData.results.length === 0 && !toast.isActive(TOAST_ID)) {
-    toast.info("No movies found", { toastId: TOAST_ID });
-  }
-}, [moviesData, searchValue]);
-
+  useEffect(() => {
+    if (moviesData && searchValue.trim() !== "" && moviesData.results.length === 0 && !toast.isActive(TOAST_ID)) {
+      toast.info("No movies found", { toastId: TOAST_ID });
+    }
+  }, [moviesData, searchValue]);
 
   const handlePageChange = useCallback(
     (newPage: number) => {
@@ -71,7 +78,10 @@ useEffect(() => {
       <h1>Movies on TMDB</h1>
       <div className={cls.controlsContainer} ref={controlsContainerRef}>
         <div className={cls.searchMovieWrapper}>
-          <SearchInput value={searchValue} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)} />
+          <SearchInput
+            value={searchValue}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+          />
           <Filters onFilterChange={setFilters} className={cls.MovieFilters} />
         </div>
       </div>

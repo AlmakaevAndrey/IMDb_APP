@@ -2,7 +2,7 @@ import React from "react";
 import cls from "./Pagination.module.css";
 import { Button } from "../Button/Button";
 
-type PaginationPropsType = {
+interface PaginationPropsType {
   totalPages: number;
   currentPage: number;
   onPageHandlerChange: (page: number) => void;

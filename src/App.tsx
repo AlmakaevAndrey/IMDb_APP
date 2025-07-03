@@ -1,4 +1,4 @@
-import React, {  useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { MainLayout } from "./components/MainLayout";
 import { HomePageLazy } from "./pages/HomePage";
@@ -13,7 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useAuth } from "./hooks/useAuth";
 
 const ProtectedRoutes = () => {
-  const {isAuth, loading} = useAuth();
+  const { isAuth, loading } = useAuth();
   const location = useLocation();
 
   const TOAST_LOG_OUT_ID = "toast-logged-out-id";
@@ -26,11 +26,11 @@ const ProtectedRoutes = () => {
         prevAuthRef.current = isAuth;
         return;
       }
-      
+
       if (isAuth && !toast.isActive(TOAST_LOG_IN_ID)) {
         toast.success("You are logged in!", { toastId: TOAST_LOG_IN_ID });
-      } 
-      
+      }
+
       if (prevAuthRef.current == !isAuth) {
         if (!isAuth && !toast.isActive(TOAST_LOG_OUT_ID)) {
           toast.error("You are logged out!", { toastId: TOAST_LOG_OUT_ID });
@@ -38,40 +38,36 @@ const ProtectedRoutes = () => {
         prevAuthRef.current = isAuth;
       }
     }
-  }, [loading, isAuth])
+  }, [loading, isAuth]);
 
-  return loading 
-   ? <Loader/>
-   : isAuth 
-   ? <Outlet/> 
-   : <Navigate to="/forbidden"  state={{from: location.pathname}} replace />
-   }
+  return loading ? <Loader /> : isAuth ? <Outlet /> : <Navigate to="/forbidden" state={{ from: location.pathname }} replace />;
+};
 
 const App: React.FC = () => {
   return (
     <>
-    <ThemeProvider>
-      <AuthProvider>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<MoviePageLazy/>} />
-            <Route path="/movie/:id" element={<MoviePageLazy />} />
-            <Route path="/forbidden" element={<ForbiddenPage/>} />
-            <Route path="/search" element={<HomePageLazy />} />
-            <Route path="/movie/:movieType?" element={<HomePageLazy />} />
+      <ThemeProvider>
+        <AuthProvider>
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
+            <Routes>
+              <Route element={<MainLayout />}>
+                <Route path="/" element={<MoviePageLazy />} />
+                <Route path="/movie/:id" element={<MoviePageLazy />} />
+                <Route path="/forbidden" element={<ForbiddenPage />} />
+                <Route path="/search" element={<HomePageLazy />} />
+                <Route path="/movie/:movieType?" element={<HomePageLazy />} />
 
-            <Route element={<ProtectedRoutes/>}>
-              <Route path="/favorites" element={<FavoritesMovieLazy />} />
-            </Route>
+                <Route element={<ProtectedRoutes />}>
+                  <Route path="/favorites" element={<FavoritesMovieLazy />} />
+                </Route>
 
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      <ToastContainer position="top-right" autoClose={3000} />
-      </AuthProvider>
-    </ThemeProvider>
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+          <ToastContainer position="bottom-right" autoClose={3000} />
+        </AuthProvider>
+      </ThemeProvider>
     </>
   );
 };

@@ -1,15 +1,15 @@
-export type FiltersProps = {
+export interface FiltersProps {
   genre?: string | number;
   rating?: number;
   year?: number;
-};
+}
 
 type FilterParams = {
   with_genres?: string | number;
   "vote_average.gte"?: number;
   "release_date.gte"?: string;
   "release_date.lte"?: string;
-}
+};
 
 export const buildFiltersParams = (filters: FiltersProps): FilterParams => {
   const params: FilterParams = {};

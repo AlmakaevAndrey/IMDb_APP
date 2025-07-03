@@ -1,23 +1,20 @@
-import { memo } from "react";
+import { FC, memo } from "react";
 import { MovieCard } from "../MovieCard";
 import cls from "./MovieCardList.module.css";
 
-type Movie = {
+interface Movie {
   id: number;
   title: string;
   poster_path?: string;
 }
 
 type MovieProps = {
-  movies?: Movie[];
-}
+  movies: Movie[];
+};
 
-export const MovieCardList = memo(({ movies }: MovieProps) => {
+export const MovieCardList: FC<MovieProps> = memo(({ movies }) => {
   if (!movies || movies.length === 0) {
-    console.log("Received movies:", movies);
-
     return <div>No movies found</div>;
-    
   }
 
   return (
